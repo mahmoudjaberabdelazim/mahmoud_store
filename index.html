@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Mahmoud Gaber Abu Aliwa – متجر الملابس والساعات</title>
+    <style>
+        /* ===== RESET & ROOT ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --black: #0b0b0b;
+            --gold: #c9a84c;
+            --soft: #f5f5f3;
+            --white: #ffffff;
+            --muted: #777;
+            --shadow: 0 8px 25px rgba(0,0,0,0.07);
+            --radius: 14px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: var(--soft);
+            color: #1a1a1a;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .top-bar {
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            border-radius: 12px 12px 0 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            padding: 16px 24px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--gold);
+        }
+        .cart-btn {
+            background: var(--black);
+            color: var(--white);
+            padding: 10px 22px;
+            border-radius: 40px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cart-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+        .cart-count {
+            background: var(--gold);
+            color: var(--black);
+            padding: 0 10px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            line-height: 22px;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: var(--black);
+            color: var(--white);
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        .hero h1 span {
+            color: var(--gold);
+        }
+        .hero p {
+            color: #b0b0b0;
+            max-width: 450px;
+            margin: 10px 0 20px;
+        }
+        .hero .btn {
+            background: var(--gold);
+            color: var(--black);
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .hero .btn:hover {
+            background: var(--white);
+        }
+        .hero-badge {
+            background: #1a1a1a;
+            padding: 20px 30px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold);
+            letter-spacing: 6px;
+        }
+
+        /* ===== FILTERS ===== */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .filter-btn {
+            background: var(--white);
+            border: 1px solid #ddd;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .filter-btn.active {
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+        .filter-btn:hover {
+            border-color: var(--black);
+        }
+
+        /* ===== PRODUCT GRID ===== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 22px;
+        }
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 16px 16px 20px;
+            box-shadow: var(--shadow);
+            transition: 0.25s;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 35px rgba(0,0,0,0.1);
+        }
+        .product-img {
+            height: 160px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 12px;
+            background: #ccc;
+        }
+        .product-img.tshirt { background: #2c3e50; }
+        .product-img.hoodie { background: #34495e; }
+        .product-img.pants { background: #2d2d2d; }
+        .product-img.watch { background: #1a1a2e; }
+        .product-img .emoji { font-size: 3rem; line-height: 1; }
+        .product-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 2px;
+        }
+        .product-category {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .product-price {
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .product-actions button {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 40px;
+            border: 2px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .product-actions button.outline {
+            background: transparent;
+            color: var(--black);
+            flex: 0.4;
+        }
+        .product-actions button:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--black);
+        }
+        .product-actions button.outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* ===== CART DRAWER ===== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: none;
+            justify-content: flex-end;
+        }
+        .cart-overlay.open {
+            display: flex;
+        }
+        .cart-panel {
+            background: var(--white);
+            width: 420px;
+            max-width: 94vw;
+            height: 100%;
+            padding: 24px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .cart-header h2 { font-size: 1.5rem; }
+        .cart-close {
+            font-size: 1.6rem;
+            background: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 50px 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item .ci-color {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            background: #eee;
+        }
+        .cart-item-info h4 { font-size: 0.95rem; }
+        .cart-item-info .ci-price { font-size: 0.85rem; color: var(--muted); }
+        .cart-qty {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cart-qty button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .cart-qty button:hover { background: #eee; }
+        .cart-remove {
+            color: #c0392b;
+            font-weight: 700;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .cart-total {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 2px solid var(--black);
+            font-size: 1.2rem;
+            font-weight: 900;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cart-checkout { margin-top: 16px; }
+        .cart-checkout button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 40px;
+            border: none;
+            background: var(--gold);
+            color: var(--black);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .cart-checkout button:hover { background: var(--black); color: var(--white); }
+
+        /* ===== CHECKOUT FORM ===== */
+        .checkout-form {
+            display: none;
+            margin-top: 16px;
+        }
+        .checkout-form.show { display: block; }
+        .checkout-form .field { margin-bottom: 12px; }
+        .checkout-form label { font-weight: 600; font-size: 0.9rem; display: block; margin-bottom: 3px; }
+        .checkout-form input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+        .payment-info {
+            background: #f8f7f5;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            margin: 12px 0;
+        }
+        .payment-info strong { color: var(--gold); }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--black);
+            color: var(--white);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 999;
+            pointer-events: none;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--black);
+            color: #aaa;
+            padding: 30px 5%;
+            margin-top: 50px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        footer .logo { color: var(--white); }
+        footer .logo span { color: var(--gold); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero h1 { font-size: 2rem; }
+            .hero-badge { margin-top: 16px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 450px) {
+            .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .product-img { height: 120px; }
+            .product-name { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">🇪🇬 شحن داخل مصر • الدفع عند الاستلام • Dr. Mahmoud Gaber Abu Aliwa</div>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">Dr. <span>Mahmoud</span> Gaber</div>
+    <button class="cart-btn" onclick="openCart()">
+        🛒 السلة <span class="cart-count" id="cartCount">0</span>
+    </button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div>
+        <h1>ستايلك <span>يبدأ</span> من هنا</h1>
+        <p>تشكيلة رائعة من الملابس والساعات الفاخرة بأسعار منافسة. جودة عالية وتصاميم عصرية.</p>
+        <button class="btn" onclick="document.getElementById('shop').scrollIntoView()">تسوق الآن</button>
+    </div>
+    <div class="hero-badge">✦ ZERO ✦</div>
+</section>
+
+<!-- SHOP -->
+<section id="shop" style="margin-bottom:40px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
+        <h2 style="font-size:2rem; font-weight:900;">المجموعة</h2>
+        <span style="color:var(--muted); font-weight:600;" id="resultCount"></span>
+    </div>
+
+    <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="tshirt">تيشيرت</button>
+        <button class="filter-btn" data-filter="hoodie">هودي</button>
+        <button class="filter-btn" data-filter="pants">بنطلون</button>
+        <button class="filter-btn" data-filter="watch">ساعات</button>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="logo">Dr. <span>Mahmoud</span> Gaber</div>
+    <div>© 2026 جميع الحقوق محفوظة</div>
+</footer>
+
+<!-- ===== CART ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="if(event.target===this) closeCart()">
+    <div class="cart-panel">
+        <div class="cart-header">
+            <h2>🛒 سلة المشتريات</h2>
+            <button class="cart-close" onclick="closeCart()">✕</button>
+        </div>
+        <div id="cartItems"></div>
+        <div class="cart-total">
+            <span>المجموع</span>
+            <span id="cartTotal">0 ج.م</span>
+        </div>
+        <div class="cart-checkout">
+            <button onclick="toggleCheckout()">إتمام الطلب</button>
+        </div>
+        <div class="checkout-form" id="checkoutForm">
+            <h3 style="margin:12px 0 8px;">بيانات التوصيل</h3>
+            <div class="field"><label>الاسم *</label><input id="custName" placeholder="الاسم الكامل"></div>
+            <div class="field"><label>رقم الهاتف *</label><input id="custPhone" placeholder="مثال: 01012345678"></div>
+            <div class="field"><label>المحافظة *</label><input id="custArea" placeholder="المحافظة"></div>
+            <div class="field"><label>العنوان بالتفصيل *</label><input id="custAddress" placeholder="الشارع، المنطقة"></div>
+            <div class="payment-info">
+                <b>💳 رسوم الشحن: <strong>50 ج.م</strong></b>
+                <p style="margin:6px 0; font-size:0.9rem;">حوّل 50 ج.م على Vodafone Cash للرقم: <strong style="direction:ltr;display:block;font-size:1.1rem;">01063709288</strong></p>
+                <div class="field"><label>رقم العملية / المرجع</label><input id="transactionId" placeholder="رقم التحويل"></div>
+            </div>
+            <button style="width:100%; padding:14px; border-radius:40px; border:none; background:var(--gold); color:var(--black); font-weight:700; font-size:1rem; cursor:pointer;" onclick="placeOrder()">تأكيد الطلب</button>
+            <p style="font-size:0.8rem; color:var(--muted); margin-top:10px;">سيتم فتح واتساب لإرسال تفاصيل الطلب.</p>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // ============================================================
+    //  PRODUCTS (تيشيرت، هودي، بنطلون، ساعات – أكثر من 25 منتج)
+    // ============================================================
+    const products = [
+        // T-shirts
+        { id: 1, name: 'تيشيرت ZERO Basic', category: 'tshirt', price: 250, emoji: '👕' },
+        { id: 2, name: 'تيشيرت أوفرسايز أسود', category: 'tshirt', price: 320, emoji: '👕' },
+        { id: 3, name: 'تيشيرت أبيض كلاسيك', category: 'tshirt', price: 220, emoji: '👕' },
+        { id: 4, name: 'تيشيرت جرافيك', category: 'tshirt', price: 280, emoji: '👕' },
+        { id: 5, name: 'تيشيرت نيلي فاتح', category: 'tshirt', price: 260, emoji: '👕' },
+        { id: 6, name: 'تيشيرت كحلي', category: 'tshirt', price: 270, emoji: '👕' },
+        { id: 7, name: 'تيشيرت رمادي', category: 'tshirt', price: 240, emoji: '👕' },
+        // Hoodies
+        { id: 8, name: 'هودي ZERO كلاسيك', category: 'hoodie', price: 450, emoji: '🧥' },
+        { id: 9, name: 'هودي أوفرسايز رمادي', category: 'hoodie', price: 520, emoji: '🧥' },
+        { id: 10, name: 'هودي أسود مع تطريز', category: 'hoodie', price: 550, emoji: '🧥' },
+        { id: 11, name: 'هودي بيج محايد', category: 'hoodie', price: 480, emoji: '🧥' },
+        { id: 12, name: 'هودي أحمر غامق', category: 'hoodie', price: 490, emoji: '🧥' },
+        // Pants
+        { id: 13, name: 'بنطلون جينز أزرق', category: 'pants', price: 380, emoji: '👖' },
+        { id: 14, name: 'بنطلون كارجو أخضر', category: 'pants', price: 420, emoji: '👖' },
+        { id: 15, name: 'بنطلون رياضي أسود', category: 'pants', price: 290, emoji: '👖' },
+        { id: 16, name: 'بنطلون تشينو بيج', category: 'pants', price: 360, emoji: '👖' },
+        { id: 17, name: 'بنطلون جينز ممزق', category: 'pants', price: 400, emoji: '👖' },
+        { id: 18, name: 'بنطلون كارجو عسكري', category: 'pants', price: 430, emoji: '👖' },
+        // Watches (all 400 EGP)
+        { id: 19, name: 'ساعة ZERO رياضية', category: 'watch', price: 400, emoji: '⌚' },
+        { id: 20, name: 'ساعة كلاسيك جلدية', category: 'watch', price: 400, emoji: '⌚' },
+        { id: 21, name: 'ساعة ذهبية أنيقة', category: 'watch', price: 400, emoji: '⌚' },
+        { id: 22, name: 'ساعة عسكرية رقمية', category: 'watch', price: 400, emoji: '⌚' },
+        { id: 23, name: 'ساعة ميني مال', category: 'watch', price: 400, emoji: '⌚' },
+        { id: 24, name: 'ساعة ZERO Limited', category: 'watch', price: 400, emoji: '⌚' },
+        { id: 25, name: 'ساعة كروم كلاسيك', category: 'watch', price: 400, emoji: '⌚' },
+    ];
+
+    // ============================================================
+    //  CART (localStorage)
+    // ============================================================
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateUI();
+    }
+
+    function updateUI() {
+        const count = cart.reduce((s, i) => s + i.qty, 0);
+        document.getElementById('cartCount').textContent = count;
+        renderCart();
+    }
+
+    // ============================================================
+    //  RENDER PRODUCTS
+    // ============================================================
+    function renderProducts(filter = 'all') {
+        const grid = document.getElementById('productGrid');
+        const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+        document.getElementById('resultCount').textContent = `(${filtered.length} منتج)`;
+
+        grid.innerHTML = filtered.map(p => `
+            <div class="product-card">
+                <div class="product-img ${p.category}">
+                    <span class="emoji">${p.emoji}</span>
+                </div>
+                <div class="product-name">${p.name}</div>
+                <div class="product-category">${p.category === 'tshirt' ? 'تيشيرت' : p.category === 'hoodie' ? 
