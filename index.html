@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Mahmoud Gaber – متجر</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f5f3; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 20px; }
+        .card { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .card h3 { font-size: 1rem; margin-bottom: 6px; }
+        .price { font-weight: bold; color: #c9a84c; font-size: 1.2rem; }
+        button { background: #111; color: white; border: none; padding: 8px 16px; border-radius: 30px; cursor: pointer; margin-top: 8px; }
+        .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-btn { background: white; border: 1px solid #ddd; padding: 6px 18px; border-radius: 30px; cursor: pointer; }
+        .filter-btn.active { background: #111; color: white; }
+        .cart-btn { background: #111; color: white; padding: 10px 20px; border-radius: 30px; display: inline-block; margin-bottom: 20px; cursor: pointer; }
+        .cart-count { background: #c9a84c; color: #111; padding: 0 8px; border-radius: 20px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🛍 Dr. Mahmoud Gaber Abu Aliwa</h1>
+    <button class="cart-btn" onclick="alert('السلة: ' + cart.length + ' منتجات')">🛒 السلة <span class="cart-count" id="cartCount">0</span></button>
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="tshirt">تيشيرت</button>
+        <button class="filter-btn" data-filter="watch">ساعات</button>
+    </div>
+
+    <div class="product-grid" id="grid"></div>
+</div>
+
+<script>
+    const products = [
+        { id: 1, name: 'تيشيرت ZERO', category: 'tshirt', price: 250 },
+        { id: 2, name: 'تيشيرت أوفرسايز', category: 'tshirt', price: 320 },
+        { id: 3, name: 'ساعة ZERO رياضية', category: 'watch', price: 400 },
+        { id: 4, name: 'ساعة كلاسيك جلد', category: 'watch', price: 400 },
+        { id: 5, name: 'هودي كلاسيك', category: 'hoodie', price: 450 },
+        { id: 6, name: 'بنطلون جينز', category: 'pants', price: 380 },
+    ];
+    let cart = [];
+
+    function render(filter = 'all') {
+        const grid = document.getElementById('grid');
+        const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+        grid.innerHTML = filtered.map(p => `
+            <div class="card">
+                <h3>${p.name}</h3>
+                <div class="price">${p.price} ج.م</div>
+                <button onclick="addToCart(${p.id})">➕ أضف</button>
+            </div>
+        `).join('');
+        document.getElementById('cartCount').textContent = cart.length;
+    }
+
+    function addToCart(id) {
+        cart.push(products.find(p => p.id === id));
+        document.getElementById('cartCount').textContent = cart.length;
+        alert('تمت الإضافة');
+    }
+
+    // filters
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.onclick = function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            render(this.dataset.filter);
+        };
+    });
+
+    render();
+</script>
+</body>
+</html>
